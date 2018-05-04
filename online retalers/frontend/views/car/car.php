@@ -104,16 +104,16 @@ function pop_login(){
                             <img src="images/3412_183_24_30_27_27885.jpg" width="100px" height="100px" class="m_10_20_10_0" alt="">
                         </a>
                         <a href="#" target="_blank">
-                            <span class="w390 bold c333 fl h20 mt35"><?=$value['goods_name']?></span>
+                            <span class="w390 bold c333 fl h20 mt35"><?=$value['goods_name']?>(<?=$value['goods_color']?>)</span>
                         </a>
                     </li>
                     <li class="w120 tc">
                         <span class="bold ccf0 f16">￥<?=$value['goods_price']*$value['goods_num']?></span>
                     </li>
                     <li class="w120 tc">
-                            <span class="btne3d w18 h22 inbl re-t0-l5 ie-t1_m50 ie_mi" oprtype="minus" oprid="548546">—</span>
-                            <input type="text" id="goods_number_548546" name="goods_number" maxlength="4" size="2" value="<?=$value['goods_num']?>" class="b_1_e5e p_0_5 tc w28 h20 ie-t1_m50 ie_mi goods_number c000 bold" oprid="548546" oprnum="1">
-                            <span class="btne3d w18 h22 inbl re_t0-l5 ie-t1_m50 ie_mi" oprtype="add" oprid="548546">+</span>
+                            <span class="btne3d w18 h22 inbl re-t0-l5 ie-t1_m50 ie_mi jian" oprtype="minus" oprid="548546">—</span>
+                            <input type="text" id="goods_number_548546" name="goods_number" maxlength="4" size="2"  value="<?=$value['goods_num']?>" class="b_1_e5e p_0_5 tc w28 h20 ie-t1_m50 ie_mi goods_number c000 bold goods_num" oprid="548546" oprnum="1" readonly="readonly">
+                            <span class="btne3d w18 h22 inbl re_t0-l5 ie-t1_m50 ie_mi jia"  oprtype="add" oprid="548546">+</span>
                                                                     </li>
                     <li class="w100 tr">
                         <a href="javascript:void(0)" id="collection" oprid="25523" class="ul">收藏</a>
@@ -207,4 +207,23 @@ function KFHover(ipt){
   </div>
 </div>
 </body>
+<script src="<?= Yii::$app->params['ahead_js']?>/jquery-1.8.3.js"></script>
+<script>
+    $(function () {
+      $(document).on('click','.jian',function () {
+          var num = parseInt($(this).next().val())
+          var new_num = num - 1;
+          if(new_num < 1){
+              return false;
+          }
+          $(this).next().val(new_num)
+      })
+        $(document).on('click','.jia',function () {
+            var num = parseInt($(this).prev().val())
+            var new_num = num + 1;
+
+            $(this).prev().val(new_num)
+        })
+    })
+</script>
 </html>

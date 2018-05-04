@@ -71,8 +71,8 @@ class DetailedController extends Controller
         }else{
             $user_id = $cookies->getValue('user')['user_id'];
             $goods_id = $arr['goods_id'];
-            $res = Yii::$app->db->createCommand("SELECT * FROM `shopping_car` WHERE goods_id = $goods_id")->queryOne();
-            if ($res){
+            $res = Yii::$app->db->createCommand("SELECT * FROM `shoppingcar` WHERE goods_id = $goods_id")->queryOne();
+            if ($res['goods_id'] == $arr['goods_id'] && $res['goods_color'] == $arr['goods_color']){
                 $res = [
                     'code'=>5,
                     'mation'=>'该商品已经在您的购物车了哦'
@@ -85,6 +85,7 @@ class DetailedController extends Controller
                     'goods_price'=>$arr['goods_price'],
                     'goods_name'=>$arr['goods_name'],
                     'goods_num'=>$arr['num'],
+                    'goods_color'=>$arr['goods_color'],
                     'join_time'=>$join_time,
                 ])->execute();
                 if ($result){
