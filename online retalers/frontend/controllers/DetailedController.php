@@ -17,9 +17,20 @@ class DetailedController extends Controller
    	public function actionDetailed()
    	{
    	    $goods_id = Yii::$app->request->get('goods_id');
-   	    $goods_info = Yii::$app->db->createCommand("SELECT goods_id,goods_price,goods_name,goods_brief FROM `goods` WHERE goods_id = $goods_id AND is_on_sale = 1")->queryOne();
 
-   	    return $this->render('detailed',['goods_info'=>$goods_info]);
+   	    $goods_info = Yii::$app->db->createCommand("SELECT goods_id,goods_price,goods_name,goods_brief FROM `goods` WHERE goods_id = $goods_id AND is_on_sale = 1")->queryOne();
+        $goods_sku = Yii::$app->db->createCommand("SELECT sn_color FROM `sn` WHERE goods_id  = '".$goods_id."'")->queryAll();
+
+   	    return $this->render('detailed',['goods_info'=>$goods_info,'goods_sku'=>$goods_sku]);
+   	}
+
+   	public function actionGetPrice(){
+   	    $color = Yii::$app->request->post('color');
+
+   	    $goods_id = Yii::$app->request->post('goods_id');
+   	    $sn_info = Yii::$app->db->createCommand("SELECT sn_price,sn_number FROM `sn` WHERE sn_color = '".$color."' AND goods_id = '".$goods_id."' ")->queryOne();
+
+   	    return json_encode($sn_info);
    	}
 
    	public  function actionShoppingCart(){
@@ -28,6 +39,7 @@ class DetailedController extends Controller
         $arr['goods_price'] = Yii::$app->request->post('goods_price');
         $arr['goods_name'] = Yii::$app->request->post('goods_name');
         $arr['num'] = Yii::$app->request->post('num');
+        $arr['goods_color'] = Yii::$app->request->post('color');
         $res = '';
         $cookies = Yii::$app->request->cookies;
         if(!isset($cookies['user'])){

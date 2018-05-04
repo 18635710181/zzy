@@ -183,7 +183,7 @@ $(function() {
          <div class="shop_info1_tit">
              <div class="text_life">
                 <h1 class="shop_tit" id="goods_name"><?=$goods_info['goods_name']?></h1>
-               	<span class="mc"><?=$goods_info['goods_brief']?><span id="good_price"><?=$goods_info['goods_price']?></span></span>
+               	<span class="mc"><?=$goods_info['goods_brief']?></span>
 
                 <div class="peisong"> <span>中国大陆，下单后17点前支付，当天发货</span></div>
              </div>
@@ -191,9 +191,22 @@ $(function() {
              <div class="yanse">
              	<span class="ys1">颜色：</span>
                 <span class="ys2">
-                	<a href="#"><img src="Images/img01.jpg"  width="78" height="78"/><span class="icon_g"></span></a>
-                    <a href="#"><img src="Images/img01.jpg"  width="78" height="78"/><span class="icon_g"></span></a>
-                    <a href="#"><img src="Images/img01.jpg"  width="78" height="78"/><span class="icon_g"></span></a>
+                        <?php foreach ($goods_sku as $key => $value):?>
+                        <button value="<?=$value['sn_color']?>" class="sku"><?=$value['sn_color']?></button>
+                    <?php endforeach;?>
+                </span>
+                 <input type="hidden" id="colorchecked" value="">
+             </div>
+             <div class="yanse">
+                 <span class="ys1">库存：</span>
+                 <span class="ys2">
+                    <span id="num"></span>
+                </span>
+             </div>
+             <div class="yanse">
+                 <span class="ys1">价格：</span>
+                 <span class="ys2">
+                    <span id="price"></span>
                 </span>
              </div>
              <div class="shuliang">
@@ -290,6 +303,22 @@ $(function() {
 <script src="<?=Yii::$app->params['ahead_js']?>/jquery-1.8.3.js"></script>
 <script>
     $(function () {
+        $(document).on("click",'.sku',function () {
+            var color = $(this).val();
+            $("#colorchecked").val(color);
+            var goods_id = $("#goods_id").val();
+            $.ajax({
+                data:{color:color,goods_id:goods_id},
+                type:"post",
+                dataType:"json",
+                url:"?r=detailed/get-price",
+                success:function (msg) {
+                    $("#num").html(msg.sn_number)
+                    $("#price").html(msg.sn_price);
+                }
+            })
+        })
+
         $("#jia").click(function () {
             var num = parseInt($("#number").val());
             var aa = num+1;
@@ -297,6 +326,9 @@ $(function() {
         })
         $("#jian").click(function () {
             var num = parseInt($("#number").val());
+            if(num===1){
+                return false;
+            }
             var aa = num-1;
             $("#number").val(aa);
         })
@@ -304,10 +336,14 @@ $(function() {
         $("#shopping").click(function () {
             var goods_id = $("#goods_id").val();
             var num = parseInt($("#number").val());
-            var goods_price = $("#good_price").html();
+            var goods_price = $("#price").html();
+            var color =  $("#colorchecked").val();
+            if (color==null||color==undefined||color==""){
+                alert('您还没有选择商品')
+            }
             var goods_name = $("#goods_name").html()
             $.ajax({
-                data:{goods_id:goods_id,num:num,goods_name:goods_name,goods_price:goods_price},
+                data:{goods_id:goods_id,num:num,goods_name:goods_name,goods_price:goods_price,color:color},
                 dataType:"json",
                 url:"?r=detailed/shopping-cart",
                 type:"post",

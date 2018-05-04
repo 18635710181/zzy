@@ -45,6 +45,7 @@ class LoginController extends DefaultController
                                 'goods_price'=>$value['goods_price'],
                                 'goods_num'=>$value['num'],
                                 'goods_name'=>$value['goods_name'],
+                               'goods_name'=>$value['goods_color'],
                                 'join_time'=>time(),
                             ])->execute();
                           $res_arr = array_push($arr,$res);

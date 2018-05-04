@@ -130,12 +130,12 @@ function pop_login(){
             <div class="c999">
                 <div class="fl w500">
                     <div class="m10">
-                        折扣优惠：
-                        <select id="" name="" onchange="javascript:if(this.value==122){pop_login();return false;}location.href=&#39;/index/select_activity?id=&#39;+this.value;">
-                            <option value="-1">----- 选择参与的活动折扣形式 -----</option>
-                        <option value="124">兴业银行活动</option>
-<option value="123">招行特惠活动：最高立减2000元！</option>
-                        </select>
+<!--                        折扣优惠：-->
+<!--                        <select id="" name="" onchange="javascript:if(this.value==122){pop_login();return false;}location.href=&#39;/index/select_activity?id=&#39;+this.value;">-->
+<!--                            <option value="-1">----- 选择参与的活动折扣形式 -----</option>-->
+<!--                        <option value="124">兴业银行活动</option>-->
+<!--<option value="123">招行特惠活动：最高立减2000元！</option>-->
+<!--                        </select>-->
                     </div>
                 </div>
                             </div>
@@ -146,7 +146,7 @@ function pop_login(){
         <div class="w930 m0a">
             <div class="fl">
                 <div class="mt50">
-                    <a href="#" class="f14 bold c999 b_1_efe btnf7f w146 h40 fl tc">继续购物</a>
+                    <a href="?r=index/index" class="f14 bold c999 b_1_efe btnf7f w146 h40 fl tc">继续购物</a>
                 </div>
             </div>
             <div class="fr">
